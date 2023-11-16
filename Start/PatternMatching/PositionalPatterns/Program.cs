@@ -5,7 +5,12 @@ decimal GetGroupTicketPriceDiscount(int groupSize, DateTime visitDate)
     => (groupSize, visitDate.DayOfWeek) switch
 {
     // TODO: use the position of each value as an individual pattern expression
-
+    (_,DayOfWeek.Saturday or DayOfWeek.Sunday) => 0.0m,
+    (>=5 and <10, DayOfWeek.Monday)=>0.20m,
+    (>=10, DayOfWeek.Monday)=>0.30m,
+    (>=5 and <10,_)=>0.12m,
+    (>=10, _)=>0.15m,
+    (<=0,_)=> throw new ArgumentException("Group size must be positive number"),
     _ => 0.0m,
 };
 
@@ -19,10 +24,19 @@ decimal GetGroupTicketPriceDiscount(int groupSize, DateTime visitDate)
 };
 
 // TODO: Iterate over each of the test data items and evaluate the discount
-
+foreach((var size,var date) in TestDiscountData){
+    decimal discount = GetGroupTicketPriceDiscount(size,date);
+    Console.WriteLine($"The discount for a {size}-person group on {date:ddd, MMM, d} is {discount*100}%");
+}
 
 // TODO: Use the implicit Deconstruct call to switch on the different values of a class
-
+string Classify(Point point) => point switch {
+    (>0, >0) => "Upper right quadrant",
+    (<0, >0)=> "Upper left quadrant",
+    (>0, <0)=> "Lower right quadrant",
+    (<0, <0)=> "Lower left quadrant",
+    _ => "Just a point",
+};
 
 // Declare some test data to use with the point example
 Point[] TestPointData = new[] {
@@ -32,9 +46,9 @@ Point[] TestPointData = new[] {
     new Point(-2, -2),
 };
 
-// foreach (Point p in TestPointData) {
-//     Console.WriteLine($"Point is {Classify(p)}");
-// }
+foreach (Point p in TestPointData) {
+    Console.WriteLine($"Point ({p.X},{p.Y}) is in the {Classify(p)}");
+}
 
 // Define a type that implements the Deconstruct method to return a tuple
 public readonly struct Point
