@@ -4,7 +4,7 @@
 int d = 123456;
 float f = 1234.5f;
 var x = 0xABCDEF;
-var b = 0b1101111010010010;
+var b = 0b1101_1110_1001_0010;
 
 Console.WriteLine($"{d}");
 Console.WriteLine($"{f}");

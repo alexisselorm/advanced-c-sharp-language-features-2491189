@@ -15,9 +15,21 @@ OldSchoolLogString("Test String");
 OldSchoolLogString(null);
 
 // TODO: the ?? operator returns the left-hand value if not null, or the right one if it is null
-
+void LogString(string theString){
+    Console.WriteLine(theString ?? "No String Given!");
+}
+LogString(null);
+LogString("Test String");
 
 // TODO: It's also allowable to throw an exception as part of the right-hand expression
+void ThrowableLogString(string theString){
+    Console.WriteLine(theString ?? throw new ArgumentNullException("theString","Cannot be null!"));
+}
 
+// ThrowableLogString(null);
+// ThrowableLogString("Test String");
 
 // TODO: The ??= assigns a value if the left-hand value is null
+string str = "Alexis";
+str ??="Defaul Value";
+Console.WriteLine(str);
